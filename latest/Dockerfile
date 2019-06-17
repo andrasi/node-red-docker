@@ -1,5 +1,11 @@
-ARG NODE_VERSION=8
-FROM node:${NODE_VERSION}
+# 1. start from the arm32v7 so it's Raspberry Pi friendly
+FROM arm32v7/node:lts-stretch
+
+# 2. make it work on x86 too, add some qemu magic
+COPY --chown=root:root multiarch-magic/qemu-arm-static /usr/bin/
+
+#ARG NODE_VERSION=8
+#FROM node:${NODE_VERSION}
 
 # Home directory for Node-RED application source code.
 RUN mkdir -p /usr/src/node-red
